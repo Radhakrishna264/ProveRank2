@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Radhakrishna264/ProveRank2#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.2.3"
   }
 }
