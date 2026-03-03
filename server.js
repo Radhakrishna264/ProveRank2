@@ -1,23 +1,26 @@
-require('dotenv').config()
-const express = require('express')
-const mongoose = require('mongoose')
+require("dotenv").config();
+const express = require("express");
+const connectDB = require("./config/db");
+const errorHandler = require("./middleware/errorHandler");
 
-const app = express()
+const app = express();
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => {
-  console.log("MongoDB Connected Successfully")
-})
-.catch((err) => {
-  console.error("MongoDB Connection Failed:", err)
-})
+/* Base Middleware */
+app.use(express.json());
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ProveRank2 Backend Running - DB Connected' })
-})
+/* Health Route */
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ProveRank Backend Running – Phase 0.3 Base Ready" });
+});
 
-const PORT = process.env.PORT || 3000
+/* Error Handler (Last Middleware) */
+app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`ProveRank2 running on port ${PORT}`)
-})
+const PORT = process.env.PORT || 3000;
+
+/* Start Server After DB Connect */
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});
